@@ -25,3 +25,21 @@ To remove an IP address from the `dnsmasq` configuration, send a `DELETE` reques
 - `GET /ip/{ip}`: Get information about the specified IP address.
 - `GET /domain/{domain}`: Get information about the specified domain.
 - `DELETE /ip/{ip}`: Remove the specified IP address from the `dnsmasq` configuration.
+
+## Example with docker
+Start with docker
+```
+docker build -t dnsmasq-api . 
+docker run --rm -p 8000:8000 dnsmasq-api
+```
+Use curl
+```
+➜ curl -X POST 'http://localhost:8000/ip?ip=1.1.1.1&domain=example.com'
+{"status":"success"}
+
+➜ curl -X GET http://localhost:8000/ip/1.1.1.1
+{"status":"success","info":"address=/example.com/1.1.1.1\n"}
+
+➜ curl -X DELETE http://localhost:8000/ip/1.1.1.1
+{"status":"success"}
+```
